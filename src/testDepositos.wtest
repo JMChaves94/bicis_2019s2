@@ -1,0 +1,53 @@
+import bicis.*
+import accesorios.*
+import depositos.*
+
+test "test de depositos" 
+{
+	const bici1 = new Bicicleta() 
+	bici1.rodado(28)
+	bici1.largo(150)
+	bici1.marca("Olmo")
+	bici1.agregarUnAccesorio(farolito)
+	
+	const bici2 = new Bicicleta()
+	bici2.rodado(26)
+	bici2.largo(110)
+	bici2.marca("Legnano")
+	bici2.agregarUnAccesorio(farolito)
+	
+	const canasto1 = new Canasto()
+	canasto1.volumen(8)
+	bici2.agregarUnAccesorio(canasto1)
+	
+	const morral1 = new MorralDeBici()
+	morral1.largo(21)
+	bici2.agregarUnAccesorio(morral1)
+	
+	const bici3 = new Bicicleta()
+	bici3.rodado(20)
+	bici3.largo(90)
+	bici3.marca("Legnano")
+	
+	const morral2 = new MorralDeBici()
+	morral2.largo(6)
+	morral2.setOjoDeGato()
+	bici3.agregarUnAccesorio(morral2)
+	
+	const deposito1 = new Depositos()
+	deposito1.agregarAlDeposito(bici1)
+	deposito1.agregarAlDeposito(bici2)
+	deposito1.agregarAlDeposito(bici3)
+	assert.equals(#{"Olmo", "Legnano"}, deposito1.lasMarcas())
+	assert.notThat(deposito1.esNocturno())
+	assert.notThat(deposito1.puedeCargar(50))
+		
+	const deposito2 = new Depositos()
+	deposito2.agregarAlDeposito(bici1)
+	deposito2.agregarAlDeposito(bici2)
+	assert.that(deposito2.esNocturno())
+	assert.equals(0, deposito2.cargaTotalBiciLarga())
+	assert.equals(0, deposito2.cantSinAccesorios())
+	assert.equals("Olmo", deposito2.marcaMasRapida())
+	
+}
